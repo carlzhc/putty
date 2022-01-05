@@ -1,0 +1,16 @@
+diff --git a/windows/winpgntc.c b/windows/winpgntc.c
+index 557dc53..7a0049f 100644
+--- a/windows/winpgntc.c
++++ b/windows/winpgntc.c
+@@ -134,9 +134,10 @@ static void wm_copydata_agent_query(strbuf *query, void **out, int *outlen)
+ char *agent_named_pipe_name(void)
+ {
+     char *username, *suffix, *pipename;
++    HWND desktop = GetDesktopWindow();
+     username = get_username();
+     suffix = capi_obfuscate_string("Pageant");
+-    pipename = dupprintf("\\\\.\\pipe\\pageant.%s.%s", username, suffix);
++    pipename = dupprintf("\\\\.\\pipe\\pageant.%s.%s.%p", username, suffix, desktop);
+     sfree(username);
+     sfree(suffix);
+     return pipename;
